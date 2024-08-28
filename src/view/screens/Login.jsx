@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
@@ -9,7 +9,17 @@ const Login = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     console.log(email, password);
-    navigate('/')
+    const user = {
+      email: "user@example.com",
+      password: "12345",
+    };
+    if(email === user.email && password === user.password) {
+        localStorage.setItem('email', email)
+        localStorage.setItem('password', password)
+        navigate('/')
+    } else {
+        alert('Invalid credentials')
+    }
   };
   return (
     <div className="container mt-5">

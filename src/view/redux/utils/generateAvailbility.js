@@ -1,5 +1,6 @@
 // src/utils/generateAvailability.js
 export const generateAvailability = (daysInAdvance = 30) => {
+  // 30 
     const availability = [];
     const today = new Date();
   
