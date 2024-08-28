@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { decrementQuantity } from "../redux/availabilitySlice";
 import HotelData from "../data/HotelData";
 import "bootstrap-icons/font/bootstrap-icons.css";
- 
+
 const RoomDetails = () => {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -23,10 +23,10 @@ const RoomDetails = () => {
 
   const redirect = () => {
     const email = localStorage.getItem("email");
-    const password = localStorage.getItem("password")
+    const password = localStorage.getItem("password");
 
     // Check if the email is correct
-    if (email === 'user@example.com' && password === '12345'  ) {
+    if (email === "user@example.com" && password === "12345") {
       setIsAuthenticated(true);
     } else {
       navigate("/login");
