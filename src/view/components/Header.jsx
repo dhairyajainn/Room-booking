@@ -1,23 +1,15 @@
-import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../redux/authSlice";
 
 const Header = () => {
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const email = localStorage.getItem("email");
-    // console.log(email);
-    if (email) {
-      setIsLoggedIn(true);
-    }
-  }, []);
+  const isAuthenticated = useSelector((state)=>state.auth.isAuthenticated)
+  const dispatch = useDispatch()
 
   const handleLogout = () => {
-    localStorage.removeItem("email");
-    localStorage.removeItem("password");
-    setIsLoggedIn(false);
-    navigate("/");
+    dispatch(logout())
+    navigate("/")
   };
 
   return (
@@ -34,7 +26,7 @@ const Header = () => {
           Hotel
         </Link>
         <div>
-          {isLoggedIn ? (
+          {isAuthenticated ? (
             <button onClick={handleLogout} className="btn btn-primary">
               Logout
             </button>

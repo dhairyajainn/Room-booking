@@ -11,6 +11,8 @@ const RoomDetails = () => {
   const room = HotelData.find((room) => room.id === parseInt(id));
   const dispatch = useDispatch();
   const availability = useSelector((state) => state.availability.availability);
+  
+  const isAuthenticated = useSelector((state)=>state.auth.isAuthenticated)
 
   const today = new Date().toISOString().split("T")[0];
 
@@ -19,7 +21,6 @@ const RoomDetails = () => {
   const [guestCount, setGuestCount] = useState(1);
   const [roomQuantity, setRoomQuantity] = useState(room.quantity);
   const [initialQuantity] = useState(room.quantity);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const redirect = () => {
     const email = localStorage.getItem("email");
@@ -129,7 +130,7 @@ const RoomDetails = () => {
               </ul>
 
               <div className="mb-4">
-                <h5>Select a Date:</h5>
+                <h5>Check-In-Date:</h5>
                 <input
                   type="date"
                   className="form-control"
@@ -169,7 +170,7 @@ const RoomDetails = () => {
               </div>
 
               <div className="mb-4">
-                <h5>Remaining Quantity: {roomQuantity}</h5>
+                <h5>Rooms Available: {roomQuantity}</h5>
               </div>
               {isAuthenticated ? (
                 <button

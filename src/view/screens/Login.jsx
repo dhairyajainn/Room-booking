@@ -1,29 +1,34 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../redux/authSlice";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { error, isAuthenticated } = useSelector((state) => state.auth);
 
   const handleLogin = (e) => {
     e.preventDefault();
-    console.log(email, password);
-    const user = {
-      email: "user@example.com",
-      password: "12345",
-    };
-    if(email === user.email && password === user.password) {
-        localStorage.setItem('email', email)
-        localStorage.setItem('password', password)
-        navigate('/')
+    dispatch(login({ email, password }));
+
+    // Navigate if login is successful
+    if (isAuthenticated) {
+      navigate("/");
     } else {
-        alert('Invalid credentials')
+      alert("Invalid Credential");
     }
   };
+
+  const handleSignUp = () => {
+    navigate("/register");
+  };
+
   return (
     <div className="container mt-5">
-      <form>
+      <form onSubmit={handleLogin}>
         <div className="mb-3 row">
           <label htmlFor="staticEmail" className="col-sm-2 col-form-label">
             Email :
@@ -61,13 +66,24 @@ const Login = () => {
             <button
               type="submit"
               className="btn btn-primary"
-              onClick={handleLogin}
             >
               Login
             </button>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
           </div>
         </div>
       </form>
+      <div className="row mt-3">
+        <div className="col-sm-10 offset-sm-2">
+          <button
+            type="button"
+            className="btn btn-secondary"
+            onClick={handleSignUp}
+          >
+            Sign Up
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
